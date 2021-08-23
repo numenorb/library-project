@@ -1,0 +1,45 @@
+<head>
+    <link rel = "stylesheet" href = 'style.css'>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+    <script type = "text/javascript" src="script.js" defer></script>
+</head>
+<body>
+    <div id = "nav-bar">
+        <div id = "title">Library</div>
+    </div>
+    <div id = "main">
+        <div id = "book-form">
+            <div id = 'book-form-title'>Add Books to Library</div>
+            <div id = 'book-form-inputs' >
+                <label for='book-title' class='book-form-input'>
+                    Title
+                    <input type = 'text' id ='book-title' class = "display-form" name='book-title' value ="The Fellowship Of The Rings" required>
+                </label>
+                <label for='author-name' class = 'book-form-input'>
+                    Author
+                    <input type = 'text' id='author-name' class = "display-form" name='author-name' value = "J.R.R. Tolkien">
+                </label>
+                <label for='page-count' class = 'book-form-input'>
+                    Pages
+                    <input type = 'text' id='page-count' class = "display-form" name='page-count' value = '423'>
+                </label>
+                <label for='read-status' class = 'book-form-input' >
+                    Read?
+                    <input type = 'checkbox' id='read-status' class = "display-form" name='read-status' checked>
+                </label>
+                <input id = 'submit-button' type = "submit">
+            </input>
+            </div>
+        </div>
+        <hr>
+        <table id = "library-table" border=1 frame=void rules=rows>
+            <tr id = 'table-headers'>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Pages</th>
+                <th>Read</th>
+                <th>Delete?</th>
+            </tr>
+        </table>
+    </div>
+</body>

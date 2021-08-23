@@ -1,0 +1,107 @@
+*{
+    --highlight-color: #D00000;   /* red */
+    --header-color: #1C3144;     /* dark blue */
+    --secondary-color: #FFBA08;   /* yellow */
+    --background-color: #A2AEBB;  /* slate */
+    --text-color: #3F88C5;     /* blue */
+    font-family: 'Comfortaa', cursive;
+}
+body{
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+
+}
+
+#nav-bar{
+    width: 100vw;
+    height: 20vh;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    background-color: var(--header-color);
+}
+
+#title{
+    font-size: 6rem;
+    padding: 40px 0 0 25px;
+}
+
+#main{
+    border-top: solid var(--highlight-color);
+    border-bottom: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#book-form{
+    background-color: var(--secondary-color);
+    min-width: 60vw;
+    height: 120px;
+    border: solid var(--text-color) 1px;
+    box-shadow: 1px 1px 20px 1px var(--text-color);
+    border-radius: 25px;
+    margin-top: 75px;
+    display: flex;
+    flex-direction: column;
+}
+
+#book-form-title{
+    padding: 10px 0 0 10px;
+}
+
+
+#book-form-inputs{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    margin: 0;
+
+}
+
+.book-form-input{
+    display:flex;
+    flex-direction: column;
+    margin-top: 10px;
+    min-width: 250px;
+    max-width: 400px;
+    
+    
+}
+#submit-button{
+    padding: 10px 20px 0 0 ;
+}
+#submit-button button{
+    position: relative;
+    float: right;
+}
+
+hr{
+  border: 0;
+  clear:both;
+  display:block;
+  width: 85%;               
+  background-color: var(--highlight-color);
+  height: 2px;
+  margin: 50px 0;
+}
+
+th {
+    width: 200px;
+}
+
+
+#library-table{
+    width: 80%;
+}
+
+#library-table  tr{
+    border-collapse: collapse;
+    height: 2.25rem;
+    border-color: var(--highlight-color);
+}

@@ -56,11 +56,14 @@ function createTableRow(title, author, pageCount, read, deleteStatus){
         tableItem.innerText = arguments[i];
         tableRow.appendChild(tableItem);
     }
-    if (deleteStatus === true ?
-        deleteButton = document.createElement('button') :
-        deleteButton = document.createElement('th'))
-    deleteButton.innerText = 'Delete';
+    if (deleteStatus === true){
+        deleteButton = document.createElement('button');
+        deleteButton.setAttribute('data-delete','');
+    } else{
+        deleteButton = document.createElement('th');
+    }
     tableRow.appendChild(deleteButton);
+    deleteButton.innerText = 'Delete';
     libraryDisplay.appendChild(tableRow);
 }
 // 8.22 - need to fix this. Need to reach readStatus.checked 

@@ -39,8 +39,8 @@ body{
 
 #book-form{
     background-color: var(--secondary-color);
-    min-width: 60vw;
-    height: 120px;
+    width: 60vw;
+    min-height: 120px;
     border: solid var(--text-color) 1px;
     box-shadow: 1px 1px 20px 1px var(--text-color);
     border-radius: 25px;
@@ -48,6 +48,7 @@ body{
     display: flex;
     flex-direction: column;
 }
+
 
 #book-form-title{
     padding: 10px 0 0 10px;
@@ -57,24 +58,22 @@ body{
 #book-form-inputs{
     display: flex;
     flex-direction: row;
+    flex-wrap:wrap;
     justify-content: space-between;
     align-items: center;
     padding: 0 50px;
     margin: 0;
-
 }
 
 .book-form-input{
     display:flex;
     flex-direction: column;
-    margin-top: 10px;
-    min-width: 250px;
-    max-width: 400px;
-    
-    
+    margin: 10px 0;
 }
+
 #submit-button{
     padding: 10px 20px 0 0 ;
+    width: 80px;
 }
 #submit-button button{
     position: relative;
@@ -98,10 +97,28 @@ th {
 
 #library-table{
     width: 80%;
-}
+} 
 
 #library-table  tr{
     border-collapse: collapse;
     height: 2.25rem;
     border-color: var(--highlight-color);
+}
+
+ [data-delete] {
+    position: relative;
+    top: 15px;
+    left: 25px;
+}
+
+
+
+
+@media (max-width: 1200px) {
+    #book-form-inputs{
+        flex-direction: column;
+    }
+    .book-form-input{
+        width: 100%;
+    }
 }

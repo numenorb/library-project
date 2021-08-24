@@ -43,7 +43,7 @@ body{
 #new-book:hover{
     color: var(--secondary-color);
     font-size: 10rem;
-    transform: rotate(-450deg);
+    transform: rotate(-180deg);
     cursor: pointer;
 }
 

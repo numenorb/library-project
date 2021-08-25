@@ -9,9 +9,10 @@ let bookForm = document.querySelector("#book-form");
 let libraryDisplay = document.querySelector("#library-table");
 let libraryHeaders = document.querySelector("#table-headers");
 let newBookButton = document.querySelector("#new-book");
+let deleteButtons;
 let readArray = [];
 let deleteArray = [];
-let bookCount = 0;
+let bookCount = myLibrary.length;
 submitButton.addEventListener('click', () => {addBookToLibrary();});
 newBookButton.addEventListener('click', () => {toggleBookForm();});
 
@@ -41,9 +42,9 @@ function addBookToLibrary(){
         pageCount.focus();
         return
     }
-
     myLibrary.unshift(newBook);  
     updateDisplay(myLibrary);
+    assignDeleteButtons();
     toggleBookForm();
     clearForm(allForms);
     bookCount++;
@@ -55,40 +56,44 @@ function clearForm(formArray){
     }
 }
 
-function createTableRow(title, author, pageCount, read, deleteStatus){
+function createTableRow(title, author, pageCount, read, deleteStatus, bookNumber){
     const tableRow = document.createElement('tr');
     let deleteButton;
     let readButton;
-    for(i = 0; i < arguments.length - 2; i++){
+    for(i = 0; i < arguments.length - 3; i++){
         let tableItem = document.createElement('th');
         tableItem.innerText = arguments[i];
         tableRow.appendChild(tableItem);
     }
-    let tableButton = document.createElement('th');
+    let tableReadButton = document.createElement('th');
 
-    if (read === true || read === false){
+    if (read === true || read === false){  //creates the read/unread checkbook if read is boolean
         readButton = document.createElement('input');
         readButton.setAttribute('type', 'checkbox');
-        readButton.setAttribute('data-read-status-to-change', bookCount)
-        readButton.addEventListener('click', () => changeReadStatus(myLibrary[bookCount-1]));
-        tableButton.append(readButton);
+        readButton.setAttribute('data-read-status-to-change', bookNumber);
+        readButton.addEventListener('click', () => changeReadStatus(myLibrary[bookNumber]));
+        tableReadButton.append(readButton);
         readButton.checked = read;
         readArray.push(readButton);
     }
-    else {
-        tableButton.innerText = "Read?";
+    else {                                  //Just puts is the input
+        tableReadButton.innerText = read;
     }
-    tableRow.append(tableButton)
-    let tableButton2 = document.createElement('th');
+    tableRow.append(tableReadButton);
+
+    let tableDeleteButton = document.createElement('th');
     if (deleteStatus === true){
         deleteButton = document.createElement('button');
-        tableButton2.appendChild(deleteButton);
+        deleteButton.setAttribute('data-book_to_remove', bookNumber);
+        tableDeleteButton.appendChild(deleteButton);
         deleteButton.innerText = 'Delete';
     } else{
-        tableButton2.innerText = 'Delete?';
+        tableDeleteButton.innerText = 'Delete?';
     }
-    tableRow.appendChild(tableButton2);
+    tableRow.appendChild(tableDeleteButton);
     libraryDisplay.appendChild(tableRow);
+    deleteButtons = document.querySelectorAll('[data-book_to_remove]'); //Creates new list of delete buttons
+
 }
 
 
@@ -96,9 +101,9 @@ function updateDisplay(bookList){
     while(libraryDisplay.firstChild){
         libraryDisplay.removeChild(libraryDisplay.firstChild);
     }
-    createTableRow("Title", "Author", "Pages", "Read", false) //creates headers
+    createTableRow("Title", "Author", "Pages", "Read?", false, undefined) //creates headers
     for (let i = 0; i < bookList.length; i++){
-        createTableRow(bookList[i].title, bookList[i].author, bookList[i].pageCount, bookList[i].read, true);
+        createTableRow(bookList[i].title, bookList[i].author, bookList[i].pageCount, bookList[i].read, true, bookList[i].bookNumber);
     }
 }
 
@@ -110,24 +115,51 @@ function changeReadStatus(bookToChange){
     bookToChange.read = (bookToChange.read ? false : true);
 }
 function deleteBook(bookToDelete){
+    myLibrary.splice(bookToDelete,1);
+    updateDisplay(myLibrary);
+}
+
+function assignDeleteButtons(){
+    for (let b = 0; b < bookCount + 1; b++){ // b for books
+        //let bookIndex = myLibrary.findIndex(book => book.bookNumber == b);
+        for (let d = 0; d < deleteButtons.length; d++){ //d for delete
+            if (deleteButtons[d].getAttribute('data-book_to_remove') == myLibrary[b].bookNumber){
+                deleteButtons[d].addEventListener('click', () => {
+                    myLibrary.splice(myLibrary.findIndex(book => book.bookNumber == myLibrary[b].bookNumber),1);
+                    //findIndex(book => book.bookNumber == b)+1);
+                    updateDisplay(myLibrary);
+                    assignDeleteButtons();
+                })
+            }
+        }
+    }
+}
+function creatDeleteButton(){
 
 }
-/**
- * A 'New Book' button that brings up a form allowing user to input the details of the book: author, title, # pages, read or not?
- * include a 'remove' button on each book's display -- HINT: need to associate your DOM element with the actual book objects: data attribute that corresponds to the index of the library array
- * include a 'read' button that will toggle the read status 
- * 
- * string literal to test form: 
- * console.log(`T: ${bookTitle.value} A: ${authorName.value} p: ${pageCount.value} r: ${readStatus.value}`)
- * 
- * To-Do
- * *** data validation on form: not empty, pages must be number
- * *** make the delete button work: should remove from array
- * ******* when creating the book, add an attribute to the book and the button, the delete button targets that
- * 
- * Challenge:
- * because we haven't learned to actually store anything, if the page is refreshed, all the books disappear. 
- * Try using web storage API to save data on the user's computer.
- * Set up a function that saves the whole library array to localStorage every time a new book is created/deleted/status changes.
- * Create a fucntion that looks for the array locally when the page is first loaded
-*/
+
+
+//const index = myLibrary.findIndex(book => book.bookNumber == bookData)
+// this will return the index of the book to match the delete button.
+// every time it updates deisplay, it should call setDeleteButton
+// I need to find the book with bookNumber = bookData 
+// 1. return the index of book in myLibrary based on its bookNumber
+// 2. Loop through the books and then delete buttons.
+// 3. If the delete button data-book_to_remove attribute === the bookNumber:
+// 4. addEventListener to delete the book in myLibrary in which the index === data-book_to_remove
+// 5. Update the display
+
+let newBook = new 
+Book(bookTitle.value, authorName.value, parseInt(pageCount.value), readStatus.checked, bookCount);
+let fakeBooks = [{title: 'one', author: 'fake', pageCount: 100, read: true},
+     {title: 'two', author: 'me', pageCount: 100, read: false}]
+function fakeLibrary(){
+    let newBook1 = new Book("test", "fake", 3, readStatus.checked, bookCount);
+    bookCount++;
+    let newBook2 = new Book("also test", "me", 5, readStatus.checked, bookCount);
+    bookCount++;
+    myLibrary.unshift(newBook1);
+    myLibrary.unshift(newBook2);
+    updateDisplay(myLibrary);
+
+}

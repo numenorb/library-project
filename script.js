@@ -9,12 +9,31 @@ let bookForm = document.querySelector("#book-form");
 let libraryDisplay = document.querySelector("#library-table");
 let libraryHeaders = document.querySelector("#table-headers");
 let newBookButton = document.querySelector("#new-book");
+const clearLibraryButton = document.querySelector("#clear-library-button");
 let deleteButtons;
 let readArray = [];
 let deleteArray = [];
 let bookCount = myLibrary.length;
-submitButton.addEventListener('click', () => {addBookToLibrary();});
+
+submitButton.addEventListener('click', () => {
+    addBookToLibrary();
+    saveLocalLibrary();
+});
+
 newBookButton.addEventListener('click', () => {toggleBookForm();});
+clearLibraryButton.addEventListener('click', () =>{
+    myLibrary = [];
+    updateDisplay(myLibrary);
+    localStorage.clear();
+})
+
+window.addEventListener('load',  () => {
+    if (localStorage.savedBooks){
+        myLibrary = JSON.parse(localStorage.getItem("savedBooks") || "[]");
+        updateDisplay(myLibrary);
+    }
+});
+
 
 function Book(title, author, pageCount, read, bookNumber) {
     this.title = title;
@@ -27,12 +46,12 @@ function Book(title, author, pageCount, read, bookNumber) {
 
 function addBookToLibrary(){
     let newBook = new Book(bookTitle.value, authorName.value, parseInt(pageCount.value), readStatus.checked, bookCount);
-    if(newBook.title == ''){
+    if(newBook.title.replace(/\s/g,'') == ''){
         alert('Please fill out the title.');
         bookTitle.focus();
         return
     }
-    else if(newBook.author == ''){
+    else if(newBook.author.replace(/\s/g,'') == ''){
         alert("Please fill out the author's name.");
         authorName.focus();
         return
@@ -96,7 +115,9 @@ function createTableRow(title, author, pageCount, read, deleteStatus, bookNumber
 
 }
 
-
+let saveLocalLibrary  = () => {
+    localStorage.setItem('savedBooks', JSON.stringify(myLibrary));
+}
 function updateDisplay(bookList){
     while(libraryDisplay.firstChild){
         libraryDisplay.removeChild(libraryDisplay.firstChild);
@@ -108,9 +129,11 @@ function updateDisplay(bookList){
 }
 
 function toggleBookForm(){
-    bookForm.style.display = (bookForm.style.display === 'none' ? 'flex' : 'none');
+    bookForm.style.display = (bookForm.style.display === 'none' ? 'flex' : 'none')
+    bookTitle.focus();
+    ;
 }
-
+d
 function changeReadStatus(bookToChange){
     bookToChange.read = (bookToChange.read ? false : true);
 }

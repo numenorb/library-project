@@ -150,6 +150,18 @@ th button {
 
 }
 
+#bottom-bar{
+    position: fixed;
+    display: inline-block;
+    bottom: 0;
+}
+
+#clear-library-button{
+    position: relative;
+    display: inline-block;
+    left: 50px;
+    bottom: 50px;
+}
 
 
 
@@ -161,3 +173,4 @@ th button {
         width: 100%;
     }
 }
+
